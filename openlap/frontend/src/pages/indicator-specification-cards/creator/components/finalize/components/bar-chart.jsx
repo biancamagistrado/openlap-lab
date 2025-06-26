@@ -384,18 +384,27 @@ const BarChart = ({ customize = false, handleToggleCustomizePanel }) => {
     }));
   };
 
+  // Get selected column
+  const selectedColumn = state.axisOptions.xAxisOptions.find(
+    (col) => col.field === state.axisOptions.selectedXAxis
+  );
+
+  // Determine the label to show based on the column type
+  // If type is "string", label is "Categorical", otherwise "Numerical"
+  const typeLabel = selectedColumn?.type === "string" ? "Categorical" : "Numerical";
+
   return (
     <>
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, md: 6 }}>
           <FormControl fullWidth>
-            <InputLabel id="x-axis-select-label">X-Axis</InputLabel>
+            <InputLabel id="x-axis-select-label">X-Axis ({typeLabel})</InputLabel>
             <Select
               labelId="x-axis-select-label"
               id="x-axis-select"
               value={state.axisOptions.selectedXAxis}
               onChange={handleXAxisChange}
-              label="X-Axis"
+              label="X-Axis (Categorical)"
               variant="outlined"
             >
               {state.axisOptions.xAxisOptions.map((col) => (
@@ -408,13 +417,13 @@ const BarChart = ({ customize = false, handleToggleCustomizePanel }) => {
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
           <FormControl fullWidth>
-            <InputLabel id="y-axis-select-label">Y-Axis</InputLabel>
+            <InputLabel id="y-axis-select-label">Y-Axis (Numerical)</InputLabel>
             <Select
               labelId="y-axis-select-label"
               id="y-axis-select"
               value={state.axisOptions.selectedYAxis}
               onChange={handleYAxisChange}
-              label="Y-Axis"
+              label="Y-Axis (Numerical)"
               variant="outlined"
             >
               {state.axisOptions.yAxisOptions.map((col) => (
